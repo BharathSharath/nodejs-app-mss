@@ -19,11 +19,11 @@ res.send("<h2>Welcome to Node JS express app</h2>"+appEnv.url+appEnv.port+port+p
 }).listen(9009);
 console.log(__dirname+"/images/mithunlogo.jpg");
 */
-app.get('/mithuntechnologies', function(request, response) {
+app.get('/skillrary', function(request, response) {
     //response.send("<h2><center>Welcome to Node JS app</h2>");
-    response.write("<h2><center><u>Node JS  Application </u></center></h2>");
+    response.write("<h2><center><u>Test yantra software solutions </u></center></h2>");
 	
-    response.write("<h2><center>Welcome to  Mithun Technologies. Please Contact +91-9980923226,++91-9980923216 for more information or send an email to devopstrainingblr@gmail.com <center></h2>" );
+    response.write("<h2><center>Welcome to  skillrary. Please Contact +91-99*****,++91-99********* for more information or send an email to skillrary@gmail.com <center></h2>" );
     response.end();
     
   })
@@ -44,10 +44,10 @@ app.get("/html", function(req,res){
         //res.type('application/json');
         //res.json({'name': 'Mithun Reddy L'});
         res.send({
-		'name': 'Mithun Technologies',
+		'name': 'skillrary',
 		'technology': 'DevOps',
-		'contact' : '9980923226',
-		'email': 'devopstrainingblr@gmail.com'
+		'contact' : '****',
+		'email': 'skillrary@gmail.com'
 	            });
         
         });
