@@ -19,7 +19,7 @@ res.send("<h2>Welcome to Node JS express app</h2>"+appEnv.url+appEnv.port+port+p
 }).listen(9009);
 console.log(__dirname+"/images/mithunlogo.jpg");
 */
-app.get('/skillrary', function(request, response) {
+app.get('/testyantra', function(request, response) {
     //response.send("<h2><center>Welcome to Node JS app</h2>");
     response.write("<h2><center><u>Test yantra software solutions </u></center></h2>");
 	
@@ -68,7 +68,7 @@ app.get("/status-code-500", function(req, res) {
    res.status(500).send('Internal Server Error – custom message');
 })
 
-app.get('/redirect', function(req, res) {
+app.get('/skillrary', function(req, res) {
     //Send status 300
         res.redirect('http://skillrary.com');
     });
