@@ -1,0 +1,75 @@
+pipeline{
+    agent any
+
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhublogin')
+	}
+
+	stages {
+	    
+	    stage('gitclone') {
+
+			steps {
+				git 'https://github.com/varun-polampalli/nodejs-app-mss.git'
+			}
+		}
+
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
+				sh 'docker tag $JOB_NAME:v1.$BUILD_ID varunpolampalli2001/$JOB_NAME:v1.$BUILD_ID'
+				sh 'docker tag $JOB_NAME:v1.$BUILD_ID varunpolampalli2001/$JOB_NAME:latest'
+			}
+		}
+
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+		stage('Push') {
+
+			steps {
+				sh 'docker push varunpolampalli2001/$JOB_NAME:v1.$BUILD_ID'
+				sh 'docker push varunpolampalli2001/$JOB_NAME:latest'
+                sh ' docker rmi $JOB_NAME:v1.$BUILD_ID varunpolampalli2001/$JOB_NAME:v1.$BUILD_ID varunpolampalli2001/$JOB_NAME:latest'
+			}
+		}
+		stage('Deploy') {
+
+			steps {
+			    //sh 'docker stop skillrary'
+			    //sh 'docker rm -f skillrary'
+			    //sh 'docker rmi -f varunpolampalli2001/$JOB_NAME:latest'
+			    sh 'docker run -itd --name skillrary -p 8090:9981 varunpolampalli2001/$JOB_NAME:latest'
+			}
+		}
+    }
+}
+
+node {
+    stage('checkout')
+    {
+        git 'https://github.com/varun-polampalli/nodejs-app-mss.git'
+        
+    }
+    
+    stage('build')
+    {
+        nodejs(nodeJSInstallationName: 'nodejs'){
+            sh "npm install"
+        }
+    }
+    stage('sonarreport')
+    {
+      sh "npm run sonar"
+    }
+    stage('uploadartifact')
+    {
+        sh "npm publish"
+    }
+}
+
+
