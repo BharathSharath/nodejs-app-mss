@@ -49,27 +49,5 @@ pipeline{
     }
 }
 
-node {
-    stage('checkout')
-    {
-        git 'https://github.com/varun-polampalli/nodejs-app-mss.git'
-        
-    }
-    
-    stage('build')
-    {
-        nodejs(nodeJSInstallationName: 'nodejs'){
-            sh "npm install"
-        }
-    }
-    stage('sonarreport')
-    {
-      sh "npm run sonar"
-    }
-    stage('uploadartifact')
-    {
-        sh "npm publish"
-    }
-}
 
 
